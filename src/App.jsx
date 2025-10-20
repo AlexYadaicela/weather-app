@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [queryString, setQueryString] = useState("");
+  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${queryString}&count=10&language=en&format=json`;
 
+  useEffect(() => {
+    const handleSearch = async () => {
+      try {
+        const response = await fetch(`${url}`);
+        if (!response.ok) {
+          throw new Error(`Response Status: ${response.status}`);
+        }
+        const result = await response.json();
+        console.log(result);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    handleSearch();
+  }, [queryString]);
+
+  const preventRefresh = (e) => {
+    e.preventDefault();
+  };
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <form onSubmit={preventRefresh}>
+        <input
+          type="text"
+          value={queryString}
+          name="search"
+          onChange={(e) => {
+            setQueryString(e.target.value);
+          }}
+        />
+        <button type="button">Search</button>
+      </form>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

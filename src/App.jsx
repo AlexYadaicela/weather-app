@@ -1,12 +1,13 @@
 import "./App.css";
 import { useState, useEffect, useCallback } from "react";
 import SearchForm from "./features/search/SearchForm";
+import SearchResultList from "./features/search/SearchResultList";
 
 const url = "https://geocoding-api.open-meteo.com/v1/search?name=";
 
 function App() {
   const [queryString, setQueryString] = useState("");
-  const [location, setLocation] = useState(null);
+  const [geocodingResults, setGeocodingResults] = useState(null);
 
   const encodeUrl = useCallback(() => {
     return `${url}${encodeURIComponent(
@@ -26,7 +27,7 @@ function App() {
           throw new Error(`Response Status: ${response.status}`);
         }
         const { results } = await response.json();
-        setLocation(results);
+        setGeocodingResults(results);
         console.log(results);
       } catch (error) {
         console.log(error.message);
@@ -36,9 +37,17 @@ function App() {
     fetchLocation();
   }, [queryString, encodeUrl]);
 
+  // check if dropdown renders
+  const enableDropdown =
+    geocodingResults && geocodingResults.length > 0 && queryString.length > 0;
+
   return (
     <>
       <SearchForm setQueryString={setQueryString}></SearchForm>
+      <SearchResultList
+        geocodingResults={geocodingResults}
+        enableDropDown={enableDropdown}
+      />
     </>
   );
 }

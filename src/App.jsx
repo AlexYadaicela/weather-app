@@ -38,6 +38,7 @@ function App() {
   useEffect(() => {
     const fetchForecast = async () => {
       try {
+        console.log(queryForecast);
         setIsLoading(true);
         const response = await fetch(encodeForecastUrl());
         if (!response.ok) {
@@ -47,9 +48,6 @@ function App() {
         setForecastResultHourly(hourly);
         setForecastResultCurrent(current);
         setForecastResultDaily(daily);
-        console.log(hourly);
-        console.log(current);
-        console.log(daily);
       } catch (error) {
         console.log(error.message);
       } finally {
@@ -96,6 +94,8 @@ function App() {
       <SearchResultList
         geocodingResults={geocodingResults}
         enableDropDown={enableDropdown}
+        setQueryForecast={setQueryForecast}
+        queryString={setQueryLocationString}
       />
       <WeatherForecast
         currentCondition={forecastResultCurrent}

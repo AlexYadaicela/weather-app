@@ -14,8 +14,8 @@ function WeatherForecast({
         <p>is Loading</p>
       ) : (
         <div>
-          {/* <CurrentConditions currentCondition={currentCondition} /> */}
-          <WeatherDisplay dailyCondition={dailyCondition} />
+          <CurrentConditions currentCondition={currentCondition} />
+          {/* <WeatherDisplay dailyCondition={dailyCondition} /> */}
           {/* <HourlyConditions hourlyCondition={hourlyCondition} /> */}
         </div>
       )}

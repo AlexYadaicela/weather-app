@@ -98,9 +98,9 @@ function App() {
         enableDropDown={enableDropdown}
       />
       <WeatherForecast
-        // currentCondition={forecastResultCurrent}
+        currentCondition={forecastResultCurrent}
         // hourlyCondition={forecastResultHourly}
-        dailyCondition={forecastResultDaily}
+        // dailyCondition={forecastResultDaily}
         isLoading={isLoading}
       />
     </>

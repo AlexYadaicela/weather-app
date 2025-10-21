@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 
-function SearchForm({ setQueryString }) {
+function SearchForm({ setQueryLocationString }) {
   const [localQueryString, setLocalQueryString] = useState("");
 
   useEffect(() => {
     const debounce = setTimeout(() => {
       console.log("SearchFrom is accessed");
-      setQueryString(localQueryString);
+      setQueryLocationString(localQueryString);
     }, 500);
     return () => {
       clearTimeout(debounce);
     };
-  }, [localQueryString, setQueryString]);
+  }, [localQueryString, setQueryLocationString]);
 
   const preventRefresh = (e) => {
     e.preventDefault();

@@ -2,13 +2,15 @@ import "./App.css";
 import { useState, useEffect, useCallback } from "react";
 import SearchForm from "./features/search/SearchForm";
 import SearchResultList from "./features/search/SearchResultList";
+import WeatherForecast from "./features/WeatherForecast/WeatherForecast";
 
 const urlGeocoding = "https://geocoding-api.open-meteo.com/v1/search?name=";
-
 const urlForecast = "https://api.open-meteo.com/v1/forecast";
 const urlForecastParameters =
   "daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m,weather_code&current=precipitation,wind_speed_10m,relative_humidity_2m,apparent_temperature,weather_code&timezone=auto";
+
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [queryLocationString, setQueryLocationString] = useState("");
   const [geocodingResults, setGeocodingResults] = useState(null);
   const [queryForecast, setQueryForecast] = useState({
@@ -16,7 +18,9 @@ function App() {
     longitude: "13.41",
   });
 
-  const [forecastResult, setForecastResult] = useState(null);
+  const [forecastResultHourly, setForecastResultHourly] = useState(null);
+  const [forecastResultCurrent, setForecastResultCurrent] = useState(null);
+  const [forecastResultDaily, setForecastResultDaily] = useState(null);
 
   const encodeGeocodingUrl = useCallback(() => {
     return `${urlGeocoding}${encodeURIComponent(
@@ -34,16 +38,22 @@ function App() {
   useEffect(() => {
     const fetchForecast = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(encodeForecastUrl());
         if (!response.ok) {
           throw new Error(`Response Status: ${response.status}`);
         }
         const { hourly, current, daily } = await response.json();
+        setForecastResultHourly(hourly);
+        setForecastResultCurrent(current);
+        setForecastResultDaily(daily);
         console.log(hourly);
         console.log(current);
         console.log(daily);
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -57,15 +67,17 @@ function App() {
 
     const fetchLocation = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(encodeGeocodingUrl());
         if (!response.ok) {
           throw new Error(`Response Status: ${response.status}`);
         }
         const { results } = await response.json();
         setGeocodingResults(results);
-        console.log(results);
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -84,6 +96,12 @@ function App() {
       <SearchResultList
         geocodingResults={geocodingResults}
         enableDropDown={enableDropdown}
+      />
+      <WeatherForecast
+        // currentCondition={forecastResultCurrent}
+        // hourlyCondition={forecastResultHourly}
+        dailyCondition={forecastResultDaily}
+        isLoading={isLoading}
       />
     </>
   );

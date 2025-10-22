@@ -7,7 +7,7 @@ import WeatherForecast from "./features/WeatherForecast/WeatherForecast";
 const urlGeocoding = "https://geocoding-api.open-meteo.com/v1/search?name=";
 const urlForecast = "https://api.open-meteo.com/v1/forecast";
 const urlForecastParameters =
-  "daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m,weather_code&current=precipitation,wind_speed_10m,relative_humidity_2m,apparent_temperature,weather_code&timezone=auto";
+  "daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m&current=precipitation,wind_speed_10m,relative_humidity_2m,apparent_temperature,temperature_2m&timezone=auto";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -90,13 +90,15 @@ function App() {
 
   return (
     <>
-      <SearchForm setQueryLocationString={setQueryLocationString}></SearchForm>
-      <SearchResultList
-        geocodingResults={geocodingResults}
-        enableDropDown={enableDropdown}
-        setQueryForecast={setQueryForecast}
-        queryString={setQueryLocationString}
-      />
+      <div>
+        <SearchForm setQueryLocationString={setQueryLocationString} />
+        <SearchResultList
+          geocodingResults={geocodingResults}
+          enableDropDown={enableDropdown}
+          setQueryForecast={setQueryForecast}
+          queryString={setQueryLocationString}
+        />
+      </div>
       <WeatherForecast
         currentCondition={forecastResultCurrent}
         // hourlyCondition={forecastResultHourly}

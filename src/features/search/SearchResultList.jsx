@@ -1,4 +1,5 @@
 import SearchResultItem from "./SearchResultItem";
+import styles from "./styles/SearchForm.module.css";
 
 function SearchResultList({
   geocodingResults,
@@ -16,7 +17,7 @@ function SearchResultList({
   return (
     <>
       {enableDropDown && (
-        <div>
+        <div className={styles.resultList}>
           <ul>
             {geocodingResults.map((location) => (
               <SearchResultItem

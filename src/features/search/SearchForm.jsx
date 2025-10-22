@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import styles from "./styles/SearchForm.module.css";
+import iconSearch from "../../assets/iconSearch.svg";
 
 function SearchForm({ setQueryLocationString }) {
   const [localQueryString, setLocalQueryString] = useState("");
@@ -20,15 +22,23 @@ function SearchForm({ setQueryLocationString }) {
   return (
     <>
       <form onSubmit={preventRefresh}>
-        <input
-          type="text"
-          id="search"
-          value={localQueryString}
-          onChange={(e) => {
-            setLocalQueryString(e.target.value);
-          }}
-        />
-        <button type="button">Search</button>
+        <div className={styles.searchBar}>
+          <img src={iconSearch} alt="search-icon" />
+          <input
+            className={styles.input}
+            autoComplete="off"
+            type="text"
+            placeholder="Search for a place..."
+            id="search"
+            value={localQueryString}
+            onChange={(e) => {
+              setLocalQueryString(e.target.value);
+            }}
+          />
+        </div>
+        <div className={styles.btnSubmit}>
+          <button type="button">Search</button>
+        </div>
       </form>
     </>
   );

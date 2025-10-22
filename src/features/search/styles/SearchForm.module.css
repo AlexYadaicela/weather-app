@@ -1,0 +1,60 @@
+form {
+  display: flex;
+  gap: 1rem;
+}
+
+.searchBar,
+.btnSubmit button,
+.resultList,
+.resultItem {
+  border-radius: 0.5rem;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background-color: var(--neutral-800);
+  border: 0;
+  padding-inline-start: 1rem;
+}
+
+.input {
+  font-size: 1rem;
+  outline: 0;
+  width: 20rem;
+  height: 2.5rem;
+  margin-inline-start: 0.5rem;
+}
+
+.btnSubmit button {
+  background-color: var(--blue-500);
+  border: 0;
+  height: 2.5rem;
+  width: 5rem;
+}
+
+.btnSubmit button:hover {
+  background-color: var(--blue-800);
+}
+
+.resultList {
+  position: absolute;
+  margin-block-start: 0.5rem;
+  background-color: var(--neutral-800);
+  width: 22rem;
+  padding: 0.5rem;
+}
+.resultList ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.resultItem:hover {
+  background-color: var(--neutral-700);
+  border: 1px solid var(--neutral-300);
+}
+
+.resultItem {
+  padding-block: 0.3rem;
+}

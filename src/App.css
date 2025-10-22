@@ -23,8 +23,6 @@ body {
   background-color: var(--neutral-900);
   font-family: var(--ff-primary);
   color: var(--neutral-0);
-  display: grid;
-  place-items: center;
 }
 
 button,

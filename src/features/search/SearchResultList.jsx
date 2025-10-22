@@ -6,12 +6,14 @@ function SearchResultList({
   enableDropDown,
   setQueryForecast,
   queryString,
+  setSelectedLocation,
 }) {
   const handleClick = (selectedLocation) => {
     setQueryForecast({
       latitude: selectedLocation.latitude,
       longitude: selectedLocation.longitude,
     });
+    setSelectedLocation(selectedLocation);
     queryString("");
   };
   return (

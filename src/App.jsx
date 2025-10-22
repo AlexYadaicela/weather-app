@@ -7,16 +7,17 @@ import WeatherForecast from "./features/WeatherForecast/WeatherForecast";
 const urlGeocoding = "https://geocoding-api.open-meteo.com/v1/search?name=";
 const urlForecast = "https://api.open-meteo.com/v1/forecast";
 const urlForecastParameters =
-  "daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m&current=precipitation,wind_speed_10m,relative_humidity_2m,apparent_temperature,temperature_2m&timezone=auto";
+  "daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m,weather_code&current=precipitation,wind_speed_10m,relative_humidity_2m,apparent_temperature,temperature_2m,weather_code&timezone=auto";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [queryLocationString, setQueryLocationString] = useState("");
   const [geocodingResults, setGeocodingResults] = useState(null);
   const [queryForecast, setQueryForecast] = useState({
-    latitude: "52.52",
-    longitude: "13.41",
+    latitude: "",
+    longitude: "",
   });
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   const [forecastResultHourly, setForecastResultHourly] = useState(null);
   const [forecastResultCurrent, setForecastResultCurrent] = useState(null);
@@ -34,29 +35,6 @@ function App() {
       `${urlForecast}?${coordLocation}&${urlForecastParameters}`
     );
   }, [queryForecast]);
-
-  useEffect(() => {
-    const fetchForecast = async () => {
-      try {
-        console.log(queryForecast);
-        setIsLoading(true);
-        const response = await fetch(encodeForecastUrl());
-        if (!response.ok) {
-          throw new Error(`Response Status: ${response.status}`);
-        }
-        const { hourly, current, daily } = await response.json();
-        setForecastResultHourly(hourly);
-        setForecastResultCurrent(current);
-        setForecastResultDaily(daily);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchForecast();
-  }, [queryForecast, encodeForecastUrl]);
 
   useEffect(() => {
     if (!queryLocationString) {
@@ -82,8 +60,33 @@ function App() {
     fetchLocation();
   }, [queryLocationString, encodeGeocodingUrl]);
 
+  useEffect(() => {
+    if (!queryForecast.latitude || !queryForecast.longitude) {
+      return;
+    }
+    const fetchForecast = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(encodeForecastUrl());
+        if (!response.ok) {
+          throw new Error(`Response Status: ${response.status}`);
+        }
+        const { hourly, current, daily } = await response.json();
+        setForecastResultHourly(hourly);
+        setForecastResultCurrent(current);
+        setForecastResultDaily(daily);
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchForecast();
+  }, [queryForecast, encodeForecastUrl]);
+
   // check if dropdown renders
-  const enableDropdown =
+  const hasLoad =
     geocodingResults &&
     geocodingResults.length > 0 &&
     queryLocationString.length > 0;
@@ -94,15 +97,17 @@ function App() {
         <SearchForm setQueryLocationString={setQueryLocationString} />
         <SearchResultList
           geocodingResults={geocodingResults}
-          enableDropDown={enableDropdown}
+          enableDropDown={hasLoad}
           setQueryForecast={setQueryForecast}
           queryString={setQueryLocationString}
+          setSelectedLocation={setSelectedLocation}
         />
       </div>
       <WeatherForecast
         currentCondition={forecastResultCurrent}
         // hourlyCondition={forecastResultHourly}
         // dailyCondition={forecastResultDaily}
+        selectedLocation={selectedLocation}
         isLoading={isLoading}
       />
     </>

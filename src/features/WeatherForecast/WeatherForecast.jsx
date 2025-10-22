@@ -6,15 +6,19 @@ function WeatherForecast({
   currentCondition,
   hourlyCondition,
   dailyCondition,
+  selectedLocation,
   isLoading,
 }) {
   return (
     <div>
-      {isLoading ? (
+      {isLoading || !currentCondition ? (
         <p>is Loading</p>
       ) : (
         <div>
-          <CurrentConditions currentCondition={currentCondition} />
+          <CurrentConditions
+            currentCondition={currentCondition}
+            selectedLocation={selectedLocation}
+          />
           {/* <WeatherDisplay dailyCondition={dailyCondition} /> */}
           {/* <HourlyConditions hourlyCondition={hourlyCondition} /> */}
         </div>

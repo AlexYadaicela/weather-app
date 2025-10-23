@@ -1,7 +1,7 @@
 import styles from "./styles/CurrentConditions.module.css";
 import { formatDate } from "../../utils/dateConvert.js";
 import { weatherCode } from "../../utils/weatherCode.js";
-function CurrentConditions({ currentCondition, selectedLocation }) {
+function CurrentConditions({ currentConditions, selectedLocation }) {
   const {
     time,
     precipitation,
@@ -10,7 +10,7 @@ function CurrentConditions({ currentCondition, selectedLocation }) {
     apparent_temperature,
     temperature_2m,
     weather_code,
-  } = currentCondition;
+  } = currentConditions;
 
   const formattedDate = formatDate(time.slice(0, 10));
   const currentWeather = weatherCode(parseInt(weather_code));
@@ -29,7 +29,7 @@ function CurrentConditions({ currentCondition, selectedLocation }) {
           <p>{formattedDate}</p>
         </div>
         <div className={styles.cardTemp}>
-          <img src={currentWeather} alt="" />
+          <img src={currentWeather} alt="weather icon" />
           <span>{temperature_2m}&deg;</span>
         </div>
       </div>

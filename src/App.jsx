@@ -7,10 +7,10 @@ import WeatherForecast from "./features/WeatherForecast/WeatherForecast";
 const urlGeocoding = "https://geocoding-api.open-meteo.com/v1/search?name=";
 const urlForecast = "https://api.open-meteo.com/v1/forecast";
 const urlForecastParameters =
-  "daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m,weather_code&current=precipitation,wind_speed_10m,relative_humidity_2m,apparent_temperature,temperature_2m,weather_code&timezone=auto";
+  "daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m,weather_code&current=precipitation,wind_speed_10m,relative_humidity_2m,apparent_temperature,temperature_2m,weather_code";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [queryLocationString, setQueryLocationString] = useState("");
   const [geocodingResults, setGeocodingResults] = useState(null);
   const [queryForecast, setQueryForecast] = useState({
@@ -18,10 +18,7 @@ function App() {
     longitude: "",
   });
   const [selectedLocation, setSelectedLocation] = useState("");
-
-  const [forecastResultHourly, setForecastResultHourly] = useState(null);
-  const [forecastResultCurrent, setForecastResultCurrent] = useState(null);
-  const [forecastResultDaily, setForecastResultDaily] = useState(null);
+  const [forecastResults, setForecastResults] = useState(null);
 
   const encodeGeocodingUrl = useCallback(() => {
     return `${urlGeocoding}${encodeURIComponent(
@@ -71,10 +68,8 @@ function App() {
         if (!response.ok) {
           throw new Error(`Response Status: ${response.status}`);
         }
-        const { hourly, current, daily } = await response.json();
-        setForecastResultHourly(hourly);
-        setForecastResultCurrent(current);
-        setForecastResultDaily(daily);
+        const results = await response.json();
+        setForecastResults(results);
       } catch (error) {
         console.log(error.message);
       } finally {
@@ -94,7 +89,10 @@ function App() {
   return (
     <>
       <div>
-        <SearchForm setQueryLocationString={setQueryLocationString} />
+        <SearchForm
+          setQueryLocationString={setQueryLocationString}
+          queryString={queryLocationString}
+        />
         <SearchResultList
           geocodingResults={geocodingResults}
           enableDropDown={hasLoad}
@@ -104,9 +102,7 @@ function App() {
         />
       </div>
       <WeatherForecast
-        currentCondition={forecastResultCurrent}
-        // hourlyCondition={forecastResultHourly}
-        // dailyCondition={forecastResultDaily}
+        forecastResults={forecastResults}
         selectedLocation={selectedLocation}
         isLoading={isLoading}
       />

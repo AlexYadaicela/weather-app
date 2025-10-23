@@ -1,30 +1,28 @@
 import CurrentConditions from "./CurrentConditions";
 import HourlyConditions from "./HourlyConditions";
-import WeatherDisplay from "./WeatherDisplay/WeatherDisplay";
+import DailyConditions from "./DailyConditionsDisplay/dailyConditions";
+import { memo } from "react";
 
-function WeatherForecast({
-  currentCondition,
-  hourlyCondition,
-  dailyCondition,
-  selectedLocation,
-  isLoading,
-}) {
+function WeatherForecast({ forecastResults, selectedLocation, isLoading }) {
+  if (isLoading) {
+    return <p>Loading weather data</p>;
+  }
+
+  if (!forecastResults) {
+    return <p> Please search for a location to see the weather forecast.</p>;
+  }
+  const { current, daily, hourly } = forecastResults;
+  console.log(forecastResults.current);
   return (
     <div>
-      {isLoading || !currentCondition ? (
-        <p>is Loading</p>
-      ) : (
-        <div>
-          <CurrentConditions
-            currentCondition={currentCondition}
-            selectedLocation={selectedLocation}
-          />
-          {/* <WeatherDisplay dailyCondition={dailyCondition} /> */}
-          {/* <HourlyConditions hourlyCondition={hourlyCondition} /> */}
-        </div>
-      )}
+      <CurrentConditions
+        currentConditions={current}
+        selectedLocation={selectedLocation}
+      />
+      <DailyConditions dailyConditions={daily} />
+      {/* <HourlyConditions hourlyCondition={hourlyCondition} /> */}
     </div>
   );
 }
 
-export default WeatherForecast;
+export default memo(WeatherForecast);

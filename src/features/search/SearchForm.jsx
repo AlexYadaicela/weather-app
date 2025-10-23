@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import styles from "./styles/SearchForm.module.css";
 import iconSearch from "../../assets/iconSearch.svg";
 
-function SearchForm({ setQueryLocationString }) {
-  const [localQueryString, setLocalQueryString] = useState("");
+function SearchForm({ setQueryLocationString, queryString }) {
+  const [localQueryString, setLocalQueryString] = useState(queryString);
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      console.log("SearchFrom is accessed");
       setQueryLocationString(localQueryString);
     }, 500);
     return () => {

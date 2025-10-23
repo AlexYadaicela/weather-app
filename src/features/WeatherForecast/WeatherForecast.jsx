@@ -20,7 +20,7 @@ function WeatherForecast({ forecastResults, selectedLocation, isLoading }) {
         selectedLocation={selectedLocation}
       />
       <DailyConditions dailyConditions={daily} />
-      {/* <HourlyConditions hourlyCondition={hourlyCondition} /> */}
+      <HourlyConditions hourlyConditions={hourly} />
     </div>
   );
 }

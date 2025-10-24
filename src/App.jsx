@@ -1,8 +1,8 @@
 import "./App.css";
 import { useState, useEffect, useCallback } from "react";
-import SearchForm from "./features/search/SearchForm";
-import SearchResultList from "./features/search/SearchResultList";
-import WeatherForecast from "./features/WeatherForecast/WeatherForecast";
+import WeatherPage from "./pages/WeatherPage";
+import NotFound from "./pages/NotFound";
+import { Route, Routes, useLocation } from "react-router";
 
 const urlGeocoding = "https://geocoding-api.open-meteo.com/v1/search?name=";
 const urlForecast = "https://api.open-meteo.com/v1/forecast";
@@ -87,28 +87,26 @@ function App() {
     queryLocationString.length > 0;
 
   return (
-    <>
-      <h1>How's the sky looking today?</h1>
-      <div className="searchBar">
-        <SearchForm
-          setQueryLocationString={setQueryLocationString}
-          queryString={queryLocationString}
-        />
-
-        <SearchResultList
-          geocodingResults={geocodingResults}
-          enableDropDown={hasLoad}
-          setQueryForecast={setQueryForecast}
-          queryString={setQueryLocationString}
-          setSelectedLocation={setSelectedLocation}
-        />
-      </div>
-      <WeatherForecast
-        forecastResults={forecastResults}
-        selectedLocation={selectedLocation}
-        isLoading={isLoading}
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <WeatherPage
+            setQueryLocationString={setQueryLocationString}
+            queryString={queryLocationString}
+            geocodingResults={geocodingResults}
+            setQueryForecast={setQueryForecast}
+            setSelectedLocation={setSelectedLocation}
+            forecastResults={forecastResults}
+            selectedLocation={selectedLocation}
+            isLoading={isLoading}
+            hasLoad={hasLoad}
+          />
+        }
       />
-    </>
+
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 

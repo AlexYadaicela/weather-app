@@ -1,0 +1,23 @@
+.wrapper {
+  display: grid;
+  place-content: center;
+  grid-template-areas:
+    "current hourly"
+    "daily hourly";
+  gap: 1.5rem;
+}
+
+.item-one {
+  grid-area: current;
+}
+
+.itemTwo {
+  grid-area: daily;
+}
+
+.itemThree {
+  grid-area: hourly;
+  width: 20rem;
+  /* background-color: yellow; */
+  /* width: 20rem; */
+}

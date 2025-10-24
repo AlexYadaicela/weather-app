@@ -88,11 +88,13 @@ function App() {
 
   return (
     <>
-      <div>
+      <h1>How's the sky looking today?</h1>
+      <div className="searchBar">
         <SearchForm
           setQueryLocationString={setQueryLocationString}
           queryString={queryLocationString}
         />
+
         <SearchResultList
           geocodingResults={geocodingResults}
           enableDropDown={hasLoad}

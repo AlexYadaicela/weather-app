@@ -2,6 +2,7 @@ import CurrentConditions from "./CurrentConditions";
 import HourlyConditions from "./HourlyConditions";
 import DailyConditions from "./DailyConditionsDisplay/dailyConditions";
 import { memo } from "react";
+import styles from "./styles/WeatherForecast.module.css";
 
 function WeatherForecast({ forecastResults, selectedLocation, isLoading }) {
   if (isLoading) {
@@ -14,13 +15,19 @@ function WeatherForecast({ forecastResults, selectedLocation, isLoading }) {
   const { current, daily, hourly } = forecastResults;
   console.log(forecastResults.current);
   return (
-    <div>
-      <CurrentConditions
-        currentConditions={current}
-        selectedLocation={selectedLocation}
-      />
-      <DailyConditions dailyConditions={daily} />
-      <HourlyConditions hourlyConditions={hourly} />
+    <div className={styles.wrapper}>
+      <div className={styles.itemOne}>
+        <CurrentConditions
+          currentConditions={current}
+          selectedLocation={selectedLocation}
+        />
+      </div>
+      <div className={styles.itemTwo}>
+        <DailyConditions dailyConditions={daily} />
+      </div>
+      <div className={styles.itemThree}>
+        <HourlyConditions hourlyConditions={hourly} />
+      </div>
     </div>
   );
 }

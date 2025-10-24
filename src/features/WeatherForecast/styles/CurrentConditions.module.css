@@ -1,10 +1,12 @@
 .wrapper {
   display: grid;
+  height: 100%;
   gap: 1rem;
 }
 
 .primaryCard {
   background-image: url("../../../assets/bg-today-large.svg");
+  overflow: hidden;
   background-size: cover;
   background-repeat: no-repeat;
   padding-block: 4rem;
@@ -12,6 +14,7 @@
   justify-content: space-between;
   align-items: center;
   padding-inline: 1.5rem;
+  border-radius: 2rem;
 }
 
 .cardInformation p span {
@@ -34,12 +37,14 @@
 }
 .secondaryCard {
   display: flex;
-  gap: 3rem;
+  align-items: center;
+  gap: 0.5rem;
   div {
     flex: 1;
+    /* width: 8.5rem; */
     background-color: var(--neutral-800);
     border-radius: 0.5rem;
-    padding-inline: 1.5rem;
+    padding-inline-start: 0.8rem;
   }
 }
 

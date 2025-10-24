@@ -23,6 +23,8 @@ body {
   background-color: var(--neutral-900);
   font-family: var(--ff-primary);
   color: var(--neutral-0);
+  display: grid;
+  place-items: center;
 }
 
 button,
@@ -42,4 +44,13 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.searchBar {
+  margin-block: 1rem;
+}
+
+h1 {
+  font-family: var(--ff-secondary);
+  font-size: 2.25rem;
 }

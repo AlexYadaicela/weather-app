@@ -1,16 +1,45 @@
-# React + Vite
+# Weather Forecast Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This React application provides users with current, hourly, and daily weather forecasts for any searched location worldwide. It uses the **Open-Meteo Geocoding** and **Forecast APIs** to fetch data based on user input.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting Started
 
-## React Compiler
+Follow these steps to set up and run the project locally on your machine.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+You need the following installed:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Node.js** (version 16 or later)
+- **npm** (Node Package Manager)
+
+### Installation
+
+1.  **Clone the Repository:**
+
+    ```bash
+    git clone [YOUR_REPOSITORY_URL]
+    cd [YOUR_PROJECT_FOLDER_NAME]
+    ```
+
+2.  **Install Dependencies:**
+    Install all packages required to run the React application.
+    ```bash
+    npm install
+    ```
+
+---
+
+## Running the Application
+
+Since the Open-Meteo API is **public and does not require an API key**, you can start the application immediately.
+
+### Start the Development Server
+
+Run the following command to start the application in development mode:
+
+```bash
+npm start
+```
